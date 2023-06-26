@@ -1,0 +1,18 @@
+{
+  "postes": [
+    {
+      "text": "the food i eat it is very healthy and dekecis frgbeg ",
+      "title": "favourit food every day ok",
+      "imge": "img.jpg",
+      "userInfo": {
+        "password": "\"eeee\"",
+        "name": "\"maria\""
+      },
+      "fav": false,
+      "numberOfLikes": 3,
+      "updated": false,
+      "comment": [],
+      "id": 2
+    }
+  ]
+}
