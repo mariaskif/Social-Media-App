@@ -16,17 +16,28 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import CommentIcon from '@mui/icons-material/Comment';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import { useEffect } from 'react';
+import EditIcon from '@mui/icons-material/Edit';
 const Post = ({title,text,imge,userInfo,id,fav,numberOfLikes,updated,comment}) => {
 
+
+const [dataofcom,setdataofcom]=useState("");
 const [clicked,setclicked]=useState(false);
-const [commentf,setcom]=useState(comment);
 const navigate=useNavigate();
 const [showcom,setshowcom]=useState(false);
-let lengthOfCom = Object.keys(commentf).length;
-
+const [textcomm,settextcomm]=useState("");
+const[updatecom,setupdatcom]=useState(false);
+const [upId,setupId]=useState(0)
 const changUpdates=()=>{
   updated=true;
 }
+
+  const getdata =()=>{
+  fetch("http://localhost:3200/comments").then((response)=>response.json()).then((data)=> setdataofcom(data));}
+
+  useEffect(() => {
+    getdata();
+  }, [])
 
   return (
     <Card sx={{  margin:"10px",  maxWidth: 340}}>
@@ -117,24 +128,53 @@ const changUpdates=()=>{
           right:0,
           transform:"translate(25%,25%)",
           zIndex:1,fontSize:"15px"}}>
-    {lengthOfCom}
+    {/* {numberOfComments} */}
    </div>
       </IconButton>
-      {clicked === true ? <div  ><TextField size="small"  onChange={(e)=>{
-   let arr={...commentf}
-   arr.com=e.target.value
-        setcom(arr)
+      {clicked === true ? updatecom === false ?<div><TextField size="small"  onChange={(e)=>{
+ 
+  settextcomm(e.target.value)
       }} 
         placeholder="comment.."
          sx={{mb:"10px",mr:"10px"}} /> 
          <Button variant="outlined" 
          onClick={()=>{ setclicked(false) 
-          comment=commentf;
-      fetch(`http://localhost:3200/postes/${id}`
-      ,{method:"PATCH",headers:{
+         
+          const postid=id
+          
+      fetch(`http://localhost:3200/comments/`
+      ,{method:"POST",headers:{
         'Content-Type':'application/json'
-      },body:JSON.stringify({comment})}).then( navigate("/home"))
-      }}>OK</Button> </div>: ""}
+      },body:JSON.stringify({textcomm,postid})}).then( navigate("/home"))
+   
+      }}>OK</Button> </div> : 
+    
+      <div>
+         { dataofcom.map((it)=>{
+
+return(
+<Box>
+  {it.id=== upId? 
+  <Box>
+<TextField size="small" defaultValue={it.textcomm} onChange={(e)=>{
+ 
+ settextcomm(e.target.value)
+     }} 
+       placeholder="comment.."
+        sx={{mb:"10px",mr:"10px"}} /> 
+        <Button variant="outlined" 
+        onClick={()=>{ setclicked(false) 
+     fetch(`http://localhost:3200/comments/${it.id}`
+     ,{method:"PATCH",headers:{
+       'Content-Type':'application/json'
+     },body:JSON.stringify({textcomm})}).then( navigate("/home"))
+     }}>OK</Button></Box>
+    :"" 
+   }
+</Box>
+
+)})}     
+     </div>: "" }
       </Box>
    <Box>
 
@@ -165,18 +205,42 @@ const changUpdates=()=>{
      Show Comments
    </Button>
    </Box>
-   {showcom ===true ?<Box sx={{mb:"10px"}}><Typography  paragraph color="text.secondary" sx={{display:"flex",ml:"10px",mr:"10px", border:"1px solid blue",mb:"10px",justifyContent:"space-between",
-  padding:"10px",borderRadius:"4px"}} >
-    {comment?.com}
-    <IconButton sx={{padding:0}} color='error' onClick={()=>{ 
-      setcom(comment=[]);
-      fetch(`http://localhost:3200/postes/${id}`,{method:"PATCH",headers:{
-        'Content-Type':'application/json'
-        },body:JSON.stringify({comment})})   
-  }}>
-    < CloseIcon/>
-    </IconButton>
-      </Typography>
+
+   {showcom === true ?
+   <Box sx={{mb:"10px"}}>
+    {
+    dataofcom.map((i)=>{
+      return(
+<Box>
+    {    
+        id === i.postid ? 
+          <Typography key={i.id} paragraph color="text.secondary" 
+      sx={{display:"flex",ml:"10px",mr:"10px", border:"1px solid blue",
+      mb:"10px",justifyContent:"space-between",
+    padding:"10px",borderRadius:"4px"}} >
+      {i.textcomm}
+      <Box>
+      <IconButton sx={{padding:0}}  onClick={()=>{ 
+        setupdatcom(true);
+        setclicked(true) ;
+        setupId(i.id);
+
+    }}>
+      < EditIcon/>
+      </IconButton>
+      <IconButton sx={{padding:0}} color='error' onClick={()=>{ 
+        fetch(`http://localhost:3200/comments/${i.id}`,{method:"DELETE"})
+    
+    }}>
+      < CloseIcon/>
+      </IconButton>
+      </Box>
+      </Typography>:""}
+        </Box>
+      )
+  
+    })}
+ 
 </Box> : ''}
       {/* end comments section */}
   </Card>

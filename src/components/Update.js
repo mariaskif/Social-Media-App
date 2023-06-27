@@ -10,6 +10,9 @@ import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router-dom';
 const Update = () => {
 
+
+
+  
     const [mydata,setdata]=useState([]);
     const navigate=useNavigate();
     const getdata =()=>{
@@ -76,8 +79,7 @@ return(
         }}>send</Button>
         </Stack>
   </Box> 
-        )
-     })}
+        )})}
   </Box>
     )  }
 

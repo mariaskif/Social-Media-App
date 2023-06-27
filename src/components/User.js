@@ -7,9 +7,7 @@ import { TextField,Box ,Typography} from '@mui/material';
 // import pic from "/images/avatar-01.jpg"
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
- const comment={
-  com:""
- }
+
 const User = () => {
     const navigate=useNavigate();
     const [text,setText]=useState("");
@@ -21,7 +19,6 @@ const fav=false;
 const numberOfLikes=0;
 const password=localStorage.getItem("pass")
 const name=localStorage.getItem("name");
-
 const userInfo={
   password:password,
   name:name
@@ -30,8 +27,7 @@ const userInfo={
 const sendPost=(e)=>{
   fetch("http://localhost:3200/postes",{method:"POST",headers:{
     'Content-Type':'application/json'
-  },body:JSON.stringify({text,title,imge,userInfo,fav,numberOfLikes,updated,comment})}).then( navigate("/home"))
-
+  },body:JSON.stringify({text,title,imge,userInfo,fav,numberOfLikes,updated})}).then( navigate("/home"))
 }
 
   return (
@@ -75,7 +71,8 @@ const sendPost=(e)=>{
 />
 
 <Stack  sx={{mt:"20px",display:'flex'}}>
-<Button onClick={(params) => {sendPost(params);}} variant="contained" endIcon={<SendIcon />}>send</Button>
+<Button onClick={(params) => {sendPost(params);}} variant="contained" 
+endIcon={<SendIcon />}>send</Button>
 </Stack>
  </Box>
 
