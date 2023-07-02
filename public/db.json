@@ -1,18 +1,28 @@
 {
   "postes": [
     {
-      "text": "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like it.",
-      "title": "My Favourit Food",
+      "text": "     Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over\n            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring\n            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a\n            large plate and set aside, leaving chicken and chorizo in the pan. Add\n            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,\n            stirring often until thickened and fragrant, about 10 minutes. Add\n            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.",
+      "title": "Favourit Food",
       "imge": "img.jpg",
-      "userInfo": {
-        "password": "\"12\"",
-        "name": "\"maria\""
-      },
-      "fav": true,
-      "numberOfLikes": 1,
-      "updated": true,
+      "fav": false,
+      "numberOfLikes": 0,
+      "updated": false,
+      "userId": 1,
       "id": 1
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "textcomm": "test",
+      "postid": 1,
+      "id": 1
+    }
+  ],
+  "users": [
+    {
+      "pass": "12345",
+      "name": "maria",
+      "id": 1
+    }
+  ]
 }

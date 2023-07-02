@@ -7,27 +7,42 @@ import { TextField,Box ,Typography} from '@mui/material';
 // import pic from "/images/avatar-01.jpg"
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
+import { useEffect } from 'react';
 const User = () => {
     const navigate=useNavigate();
     const [text,setText]=useState("");
     const [title,settitle]=useState("");
     const [imge,setImg]=useState("");
     const[updated,setUpdat]=useState(false);
-    
+    const [usres,setUsers]=useState("");
+// const[userId,setUserId]=useState(0);
+// const  userId=0
 const fav=false;
 const numberOfLikes=0;
-const password=localStorage.getItem("pass")
-const name=localStorage.getItem("name");
-const userInfo={
-  password:password,
-  name:name
-}
+const name=JSON.parse(localStorage.getItem("name"))
+const pass=JSON.parse(localStorage.getItem("pass"));
+let userId=0;
+const getdata =()=>{
+  fetch("http://localhost:3200/users").then((response)=>response.json()).then((data)=>setUsers(data));
+           }
+           useEffect(() => {
+             getdata();
+           })
+           const filterv=(usres)=>{
+            return usres.name === name && usres.pass ===pass  }
+
+            const filterdData= usres && usres.filter(filterv)
+           
+            filterdData && filterdData.map((i)=>{
+              userId=i.id;
+           return(userId) 
+            // return(userId)
+           })
 
 const sendPost=(e)=>{
   fetch("http://localhost:3200/postes",{method:"POST",headers:{
     'Content-Type':'application/json'
-  },body:JSON.stringify({text,title,imge,userInfo,fav,numberOfLikes,updated})}).then( navigate("/home"))
+  },body:JSON.stringify({text,title,imge,fav,numberOfLikes,updated,userId})}).then( navigate("/home"))
 }
 
   return (
@@ -83,9 +98,14 @@ endIcon={<SendIcon />}>send</Button>
       onClick={()=>{
       navigate("/favourite")
       }}>
-     My Favourit Postes
+     My Favourit Posts
     </Button>
-
+    <Button  variant="contained" disableElevation sx={{mb:"10px"}}
+      onClick={()=>{
+      navigate("/mypostes")
+      }}>
+     My Posts
+    </Button>
 {/* Logout */}
 <Button variant="contained" color='error' onClick={()=>{
    localStorage.removeItem("pass");

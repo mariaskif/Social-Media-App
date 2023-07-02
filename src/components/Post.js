@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
-const Post = ({title,text,imge,userInfo,id,fav,numberOfLikes,updated,comment}) => {
+const Post = ({title,text,imge,id,fav,numberOfLikes,updated,comment}) => {
 
 
 const [dataofcom,setdataofcom]=useState("");
@@ -52,7 +52,7 @@ const changUpdates=()=>{
           <MoreVertIcon />
         </IconButton>
       }
-      title={userInfo?.name}
+      title="maria"
       subheader="September 14, 2016"
     />
    {/* end card header */}
@@ -224,7 +224,6 @@ return(
         setupdatcom(true);
         setclicked(true) ;
         setupId(i.id);
-
     }}>
       < EditIcon/>
       </IconButton>

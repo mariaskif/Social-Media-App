@@ -2,13 +2,21 @@ import React from 'react'
 import {Box,Button,Typography,TextField} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 
 const Signin = () => {
 const [pass,setPass]=useState();
 const[name,setName]=useState();
+const [users,setUsers]=useState();
 const navigate=useNavigate();
 
+const getdata =()=>{
+  fetch("http://localhost:3200/users").then((response)=>response.json()).then((data)=>setUsers(data));
+           }
+           useEffect(() => {
+             getdata();
+           })
 
   return (
 <Box >
@@ -43,8 +51,13 @@ alignItems:"center",padding:"20px"}} component="form">
  sx={{mt:"20px",width:"200px" }} 
  type='submit'  onClick={() => {
             if(pass !== undefined && name !== undefined){
-              localStorage.setItem("pass",JSON.stringify(pass));
-              localStorage.setItem("name",JSON.stringify(name));
+              fetch("http://localhost:3200/users",{method:"POST",headers:{
+                'Content-Type':'application/json'
+              },body:JSON.stringify({pass,name})})
+              localStorage.setItem("pass",JSON.stringify((pass)));
+              localStorage.setItem("name",JSON.stringify((name)));
+              // localStorage.setItem("id",JSON.stringify((id)));
+
                 navigate("/home");
           }else{
             navigate("/");
@@ -53,14 +66,29 @@ alignItems:"center",padding:"20px"}} component="form">
 {/* Login */}
 <Button variant="outlined" sx={{mt:"20px",width:"200px"}} type='submit'
  onClick={()=>{
- const intpass=localStorage.getItem("pass")
-  const intname=localStorage.getItem("name")
-  if (pass === intpass && name === intname){
-    navigate("/home");
-  }
-  else{
-<Alert severity="error">check out your password and Name !</Alert>
-  }
+//  const intpass=localStorage.getItem("pass")
+//   const intname=localStorage.getItem("name")
+//   if (pass === intpass && name === intname){
+//     navigate("/home");
+//   }
+//   else{
+// <Alert severity="error">check out your password and Name !</Alert>
+//   }
+users.map((i)=>{
+if(pass===i.pass && name===i.name){
+
+  localStorage.setItem("pass",JSON.stringify((pass)))
+  localStorage.setItem("name",JSON.stringify((name)));
+  localStorage.setItem("id",JSON.stringify((i.id)));
+
+  navigate("/home");
+}
+   else{
+
+  return( <Alert severity="error">check out your password and Name !</Alert>)
+}
+})
+
 }}>Login</Button>
 
    </Box>

@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import User from "./components/User";
 import Fav from "./components/Fav";
 import Update from "./components/Update";
+// import Myposts from "./components/Myposts";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
   <Route path="/profile" element={<User/>}/>
   <Route path="/favourite" element={<Fav/>}/>
   <Route path="/update" element={<Update/>}/>
+  {/* <Route path="/mypostes" element={<Myposts/>}/> */}
   <Route path="*" element={<h2>Page Not Found</h2>}/>
 </Routes>
 </Container>
