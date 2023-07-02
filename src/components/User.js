@@ -36,7 +36,6 @@ const getdata =()=>{
             filterdData && filterdData.map((i)=>{
               userId=i.id;
            return(userId) 
-            // return(userId)
            })
 
 const sendPost=(e)=>{
