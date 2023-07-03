@@ -1,48 +1,45 @@
 import React from "react";
-import { getdata } from "../redux/Actions";
 import Post from "./Post";
-import { featchProducts } from "../redux/Actions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+
 const Myposts = () => {
-  const [mydata, setdata] = useState([]);
+  const [myData, setData] = useState([]);
   const [users, setUsers] = useState([]);
   // const [userI,setUsetI]=useState(0)
   const name = JSON.parse(localStorage.getItem("name"));
-  const pass = JSON.parse(localStorage.getItem("pass"));
+  // const pass = JSON.parse(localStorage.getItem("pass"));
   let userId;
-  const getdata = () => {
+  const getData = () => {
     fetch("http://localhost:3200/postes")
       .then((response) => response.json())
-      .then((data) => setdata(data));
+      .then((data) => setData(data));
   };
   useEffect(() => {
-    getdata();
+    getData();
   }, []);
 
-  const getUserdata = () => {
+  const getUserData = () => {
     fetch("http://localhost:3200/users")
       .then((response) => response.json())
       .then((data) => setUsers(data));
   };
   useEffect(() => {
-    getUserdata();
+    getUserData();
   });
   users.map((i) => {
-    if (i.name === name && i.pass === pass) {
+    if (i.name === name) {
       userId = i.id;
     }
     return userId;
   });
   console.log(userId);
 
-  const filterBYpost = (mydata) => {
-    return mydata.userId === userId;
+  const filterByPost = (myData) => {
+    return myData.userId === userId;
   };
-  const filterdData = mydata.filter(filterBYpost);
+  const filterData = myData.filter(filterByPost);
 
   return (
     <div
@@ -55,8 +52,8 @@ const Myposts = () => {
       md={2}
       lg={3}
     >
-      {filterdData &&
-        filterdData.map((item) => {
+      {filterData &&
+        filterData.map((item) => {
           return (
             <Box key={item.id}>
               <Post {...item} />

@@ -1,11 +1,12 @@
-import { FEATCH_DATA } from "./actionTypes";
+import { FETCH_DATA  } from "./actionTypes";
 
-export const getdata = () => {
+export const getData = () => {
   return async (dispatch) => {
-    const datamy = await fetch("http://localhost:3200/postes").then(
+    const myData = await fetch("http://localhost:3200/postes").then(
       (response) => response.json()
     );
-    console.log(datamy);
-    dispatch({ type: FEATCH_DATA, data: datamy });
+    console.log(myData);
+    dispatch({ type: FETCH_DATA, data: myData });
   };
 };
+

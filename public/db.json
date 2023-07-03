@@ -1,73 +1,9 @@
 {
   "postes": [
-    {
-      "text": "     Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over\n            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring\n            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a\n            large plate and set aside, leaving chicken and chorizo in the pan. Add\n            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,\n            stirring often until thickened and fragrant, about 10 minutes. Add\n            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.",
-      "title": "Favourit Food",
-      "imge": "img.jpg",
-      "fav": false,
-      "numberOfLikes": 1,
-      "updated": false,
-      "userId": 1,
-      "id": 1
-    },
-    {
-      "text": "face ,instagram ,whats app hh fdvfs",
-      "title": "What is your favourit app",
-      "imge": "images.png",
-      "fav": true,
-      "numberOfLikes": 0,
-      "updated": false,
-      "userId": 2,
-      "id": 2
-    },
-    {
-      "text": "test",
-      "title": "test",
-      "imge": "nn",
-      "fav": true,
-      "numberOfLikes": 2,
-      "updated": false,
-      "userId": 3,
-      "id": 3
-    }
+ 
   ],
-  "comments": [
-    {
-      "textcomm": "",
-      "postid": 3,
-      "id": 1
-    },
-    {
-      "textcomm": "gg",
-      "postid": 2,
-      "id": 2
-    },
-    {
-      "textcomm": "great",
-      "postid": 1,
-      "id": 3
-    },
-    {
-      "textcomm": "jjj",
-      "postid": 2,
-      "id": 4
-    }
-  ],
+  "comments": [],
   "users": [
-    {
-      "pass": "12345",
-      "name": "maria",
-      "id": 1
-    },
-    {
-      "pass": "566",
-      "name": "tamar",
-      "id": 2
-    },
-    {
-      "pass": "1234",
-      "name": "mariaS",
-      "id": 3
-    }
+  
   ]
 }

@@ -18,35 +18,29 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-const Post = ({
-  title,
-  text,
-  imge,
-  id,
-  fav,
-  numberOfLikes,
-  updated,
-  comment,
-}) => {
-  const [dataofcom, setdataofcom] = useState("");
-  const [clicked, setclicked] = useState(false);
+const Post = ({ title, text, image, id, fav, numberOfLikes, updated }) => {
+  const [dataOfCom, setDataOfCom] = useState([]);
+  const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
-  const [showcom, setshowcom] = useState(false);
-  const [textcomm, settextcomm] = useState("");
-  const [updatecom, setupdatcom] = useState(false);
-  const [upId, setupId] = useState(0);
+  const [showCom, setShowCom] = useState(false);
+  const [textComm, setTextComm] = useState("");
+  const [updateCom, setUpdateCom] = useState(false);
+  const [upId, setUpId] = useState(0);
+
+  const name = JSON.parse(localStorage.getItem("name"));
+
   const changUpdates = () => {
     updated = true;
   };
 
-  const getdata = () => {
+  const getData = () => {
     fetch("http://localhost:3200/comments")
       .then((response) => response.json())
-      .then((data) => setdataofcom(data));
+      .then((data) => setDataOfCom(data));
   };
 
   useEffect(() => {
-    getdata();
+    getData();
   }, []);
 
   return (
@@ -59,7 +53,7 @@ const Post = ({
             <MoreVertIcon />
           </IconButton>
         }
-        title="maria"
+        title={name}
         subheader="September 14, 2016"
       />
       {/* end card header */}
@@ -68,7 +62,7 @@ const Post = ({
       <CardMedia
         component="img"
         height="194"
-        image={`/images/${imge}`}
+        image={`/images/${image}`}
         alt="Paella dish"
       />
       {/*end card pictuer */}
@@ -149,7 +143,7 @@ const Post = ({
           <IconButton
             aria-label="comment"
             sx={{ mr: "10px" }}
-            onClick={() => setclicked(!clicked)}
+            onClick={() => setClicked(!clicked)}
           >
             <CommentIcon />
             <div
@@ -169,12 +163,12 @@ const Post = ({
             </div>
           </IconButton>
           {clicked === true ? (
-            updatecom === false ? (
+            updateCom === false ? (
               <div>
                 <TextField
                   size="small"
                   onChange={(e) => {
-                    settextcomm(e.target.value);
+                    setTextComm(e.target.value);
                   }}
                   placeholder="comment.."
                   sx={{ mb: "10px", mr: "10px" }}
@@ -182,16 +176,16 @@ const Post = ({
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    setclicked(false);
+                    setClicked(false);
 
-                    const postid = id;
+                    const postId = id;
 
                     fetch(`http://localhost:3200/comments/`, {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/json",
                       },
-                      body: JSON.stringify({ textcomm, postid }),
+                      body: JSON.stringify({ textComm, postId }),
                     }).then(navigate("/home"));
                   }}
                 >
@@ -200,16 +194,16 @@ const Post = ({
               </div>
             ) : (
               <div>
-                {dataofcom.map((it) => {
+                {dataOfCom.map((it) => {
                   return (
                     <Box>
                       {it.id === upId ? (
                         <Box>
                           <TextField
                             size="small"
-                            defaultValue={it.textcomm}
+                            defaultValue={it.textComm}
                             onChange={(e) => {
-                              settextcomm(e.target.value);
+                              setTextComm(e.target.value);
                             }}
                             placeholder="comment.."
                             sx={{ mb: "10px", mr: "10px" }}
@@ -217,13 +211,13 @@ const Post = ({
                           <Button
                             variant="outlined"
                             onClick={() => {
-                              setclicked(false);
+                              setClicked(false);
                               fetch(`http://localhost:3200/comments/${it.id}`, {
                                 method: "PATCH",
                                 headers: {
                                   "Content-Type": "application/json",
                                 },
-                                body: JSON.stringify({ textcomm }),
+                                body: JSON.stringify({ textComm }),
                               }).then(navigate("/home"));
                             }}
                           >
@@ -266,7 +260,7 @@ const Post = ({
             sx={{ mt: "10px" }}
             variant="contained"
             onClick={() => {
-              fetch(` http://localhost:3200/postes/${id}`, {
+              fetch(`http://localhost:3200/postes/${id}`, {
                 method: "DELETE",
               });
             }}
@@ -282,19 +276,19 @@ const Post = ({
         <Button
           variant="outlined"
           onClick={() => {
-            setshowcom(!showcom);
+            setShowCom(!showCom);
           }}
         >
           Show Comments
         </Button>
       </Box>
 
-      {showcom === true ? (
+      {showCom === true ? (
         <Box sx={{ mb: "10px" }}>
-          {dataofcom.map((i) => {
+          {dataOfCom.map((i) => {
             return (
               <Box>
-                {id === i.postid ? (
+                {id === i.postId ? (
                   <Typography
                     key={i.id}
                     paragraph
@@ -310,14 +304,14 @@ const Post = ({
                       borderRadius: "4px",
                     }}
                   >
-                    {i.textcomm}
+                    {i.textComm}
                     <Box>
                       <IconButton
                         sx={{ padding: 0 }}
                         onClick={() => {
-                          setupdatcom(true);
-                          setclicked(true);
-                          setupId(i.id);
+                          setUpdateCom(true);
+                          setClicked(true);
+                          setUpId(i.id);
                         }}
                       >
                         <EditIcon />

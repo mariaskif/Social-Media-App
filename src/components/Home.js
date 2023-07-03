@@ -1,39 +1,44 @@
-import React from 'react'
-import Post from './Post'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import {Box} from "@mui/material";
-import {useDispatch}  from "react-redux"
-import {useSelector} from "react-redux"
-import { getdata } from '../redux/Actions';
+import React from "react";
+import Post from "./Post";
+import { useEffect } from "react";
+import { useState } from "react";
+import { Box } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getData } from "../redux/Actions";
 const Home = () => {
-
-  const [mydata,setdata]=useState([]);
-  const dispatch=useDispatch();
+  const [myData, setData] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getdata())
-  }, [])
+    dispatch(getData());
+  }, [dispatch]);
 
-
-  const postes=useSelector((state)=> state.mydata);
+  const postes = useSelector((state) => state.myData);
   useEffect(() => {
-    setdata(postes)
-  }, [postes])
-  
-  
+    setData(postes);
+  }, [postes]);
+
   return (
-    <div style={{display:'flex',
-     flexWrap:"wrap",flexDirection:"column",
-     alignItems:'center' }} md={2} lg={3}>   
-   { mydata && mydata.map((item)=>{
-    
-      return( 
-         <Box key={item.id}>
-              <Post {...item}   />
-         </Box>)
-                 })} 
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+      md={2}
+      lg={3}
+    >
+      {myData &&
+        myData.map((item) => {
+          return (
+            <Box key={item.id}>
+              <Post {...item} />
+            </Box>
+          );
+        })}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

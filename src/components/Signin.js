@@ -11,19 +11,19 @@ const Signin = () => {
   const [users, setUsers] = useState();
   const navigate = useNavigate();
 
-  const getdata = () => {
+  const getData = () => {
     fetch("http://localhost:3200/users")
       .then((response) => response.json())
       .then((data) => setUsers(data));
   };
   useEffect(() => {
-    getdata();
+    getData();
   }, []);
 
   return (
     <Box>
       <Typography variant="h3" sx={{ textAlign: "center", mt: "40px" }}>
-        Welcom To My App
+        Welcome To My App
       </Typography>
 
       <Box
@@ -72,7 +72,7 @@ const Signin = () => {
                 },
                 body: JSON.stringify({ pass, name }),
               });
-              localStorage.setItem("pass", JSON.stringify(pass));
+              // localStorage.setItem("pass", JSON.stringify(pass));
               localStorage.setItem("name", JSON.stringify(name));
               // localStorage.setItem("id",JSON.stringify((id)));
 
@@ -91,11 +91,12 @@ const Signin = () => {
           sx={{ mt: "20px", width: "200px" }}
           type="submit"
           onClick={() => {
+            // eslint-disable-next-line array-callback-return
             users.map((i) => {
               if (pass === i.pass && name === i.name) {
-                localStorage.setItem("pass", JSON.stringify(pass));
+                // localStorage.setItem("pass", JSON.stringify(pass));
                 localStorage.setItem("name", JSON.stringify(name));
-                localStorage.setItem("id", JSON.stringify(i.id));
+                // localStorage.setItem("id", JSON.stringify(i.id));
 
                 navigate("/home");
               } else {

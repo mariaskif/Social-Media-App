@@ -8,28 +8,28 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 const Update = () => {
-  const [mydata, setdata] = useState([]);
+  const [myData, setData] = useState([]);
   const navigate = useNavigate();
-  const getdata = () => {
+  const getData = () => {
     fetch("http://localhost:3200/postes")
       .then((response) => response.json())
-      .then((data) => setdata(data));
+      .then((data) => setData(data));
   };
   useEffect(() => {
-    getdata();
+    getData();
   }, []);
 
-  const filterByUpdate = (mydata) => {
-    return mydata.updated === true;
+  const filterByUpdate = (myData) => {
+    return myData.updated === true;
   };
-  const filterdData = mydata.filter(filterByUpdate);
+  const filterData = myData.filter(filterByUpdate);
 
   return (
     <Box>
-      {filterdData &&
-        filterdData.map((item) => {
+      {filterData &&
+        filterData.map((item) => {
           let title = item.title;
-          let imge = item.img;
+          let image = item.image;
           let text = item.text;
           let updated = item.updated;
           return (
@@ -50,9 +50,9 @@ const Update = () => {
               />
 
               <TextField
-                defaultValue={item.imge}
+                defaultValue={item.image}
                 onChange={(eo) => {
-                  imge = eo.target.value;
+                  image = eo.target.value;
                 }}
                 placeholder="image.."
                 multiline
@@ -80,7 +80,7 @@ const Update = () => {
                       headers: {
                         "Content-Type": "application/json",
                       },
-                      body: JSON.stringify({ title, imge, text, updated }),
+                      body: JSON.stringify({ title, image, text, updated }),
                     }).then(navigate("/home"));
                   }}
                 >

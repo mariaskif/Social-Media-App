@@ -9,8 +9,7 @@ import { useNavigate } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 const Nav = () => {
   const navigate = useNavigate();
-  const intpass = localStorage.getItem("pass");
-  const intname = localStorage.getItem("name");
+  const intName = localStorage.getItem("name");
   return (
     <Box sx={{ flexGrow: 1, mb: "40px" }}>
       <AppBar position="static">
@@ -32,18 +31,22 @@ const Nav = () => {
             FaceBook
           </Typography>
 
-          <Button
-            color="inherit"
-            onClick={() => {
-              if (intpass !== "" && intname !== "") {
+          {intName === null ? (
+            ""
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => {
+                // if ( intName !== "") {
                 navigate("/profile");
-              }
-            }}
-          >
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              my Profile
-            </Typography>
-          </Button>
+                // }
+              }}
+            >
+              <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                my Profile
+              </Typography>
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
