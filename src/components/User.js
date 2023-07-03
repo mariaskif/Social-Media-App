@@ -12,7 +12,7 @@ const User = () => {
   const [title, setTitle] = useState("");
   const [image, setImg] = useState("");
   const [users, setUsers] = useState("");
- let updated=false;
+  let updated = false;
   const fav = false;
   const numberOfLikes = 0;
   const name = JSON.parse(localStorage.getItem("name"));
@@ -25,16 +25,16 @@ const User = () => {
   };
   useEffect(() => {
     getData();
-  },[]);
+  }, []);
 
   const filterUser = (users) => {
-    return users.name === name ;
+    return users.name === name;
   };
 
   const filterData = users && users.filter(filterUser);
 
   filterData &&
-  filterData.map((i) => {
+    filterData.map((i) => {
       userId = i.id;
       return userId;
     });
@@ -53,6 +53,7 @@ const User = () => {
         numberOfLikes,
         updated,
         userId,
+        name,
       }),
     }).then(navigate("/home"));
   };
@@ -65,7 +66,8 @@ const User = () => {
         <img
           src="/images/avatar-01.jpg"
           style={{ height: "200px", width: "200px", borderRadius: "50%" }}
-      alt="avatar"  />
+          alt="avatar"
+        />
         <Typography
           variant="h4"
           color="text.secondary"

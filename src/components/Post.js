@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-const Post = ({ title, text, image, id, fav, numberOfLikes, updated }) => {
+const Post = ({ title, text, image, id, fav, numberOfLikes, updated ,name }) => {
   const [dataOfCom, setDataOfCom] = useState([]);
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
@@ -27,7 +27,8 @@ const Post = ({ title, text, image, id, fav, numberOfLikes, updated }) => {
   const [updateCom, setUpdateCom] = useState(false);
   const [upId, setUpId] = useState(0);
 
-  const name = JSON.parse(localStorage.getItem("name"));
+  // const name = JSON.parse(localStorage.getItem("name"));
+
 
   const changUpdates = () => {
     updated = true;
@@ -111,6 +112,7 @@ const Post = ({ title, text, image, id, fav, numberOfLikes, updated }) => {
             aria-label="Like"
             color={numberOfLikes > 0 ? "primary" : ""}
             onClick={(e) => {
+   
               numberOfLikes = numberOfLikes + 1;
               fetch(`http://localhost:3200/postes/${id}`, {
                 method: "PATCH",
