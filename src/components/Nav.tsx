@@ -37,9 +37,7 @@ const Nav = () => {
             <Button
               color="inherit"
               onClick={() => {
-                // if ( intName !== "") {
                 navigate("/profile");
-                // }
               }}
             >
               <Typography variant="h6" sx={{ flexGrow: 1 }}>

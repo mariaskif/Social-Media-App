@@ -1,37 +1,36 @@
-import React from "react";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import Stack from "@mui/material/Stack";
 import { TextField, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useEffect } from "react";
+import { user } from "./interface";
+import { useQuery } from "@tanstack/react-query";
 const User = () => {
   const navigate = useNavigate();
-  const [text, setText] = useState("");
-  const [title, setTitle] = useState("");
-  const [image, setImg] = useState("");
-  const [users, setUsers] = useState("");
-  let updated = false;
-  const fav = false;
-  const numberOfLikes = 0;
-  const name = JSON.parse(localStorage.getItem("name"));
+  const [text, setText] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [image, setImg] = useState<string>("");
+  let updated: boolean = false;
+  const fav: boolean = false;
+  const numberOfLikes: number = 0;
+  const name: string = JSON.parse(localStorage.getItem("name") || "");
   let userId = 0;
-
-  const getData = () => {
-    fetch("http://localhost:3200/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
+  type info = {
+    name: string;
+    pass: string;
   };
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const filterUser = (users) => {
-    return users.name === name;
+  const getUserData = async (): Promise<user[]> => {
+    return await fetch("http://localhost:3200/users").then((response) =>
+      response.json()
+    );
+  };
+  const { data: dataOfUsers } = useQuery(["usersData"], getUserData);
+  const filterUser = (dataOfUsers: { data: info }) => {
+    return dataOfUsers.data.name === name;
   };
 
-  const filterData = users && users.filter(filterUser);
+  const filterData = dataOfUsers && dataOfUsers.filter(filterUser);
 
   filterData &&
     filterData.map((i) => {
@@ -39,8 +38,8 @@ const User = () => {
       return userId;
     });
 
-  const sendPost = (e) => {
-    fetch("http://localhost:3200/postes", {
+  const sendPost = async () => {
+    await fetch("http://localhost:3200/postes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +54,7 @@ const User = () => {
         userId,
         name,
       }),
-    }).then(navigate("/home"));
+    }).then(() => navigate("/home"));
   };
 
   return (
@@ -107,8 +106,8 @@ const User = () => {
 
         <Stack sx={{ mt: "20px", display: "flex" }}>
           <Button
-            onClick={(params) => {
-              sendPost(params);
+            onClick={() => {
+              sendPost();
             }}
             variant="contained"
             endIcon={<SendIcon />}
@@ -152,7 +151,6 @@ const User = () => {
           variant="contained"
           color="error"
           onClick={() => {
-            // localStorage.removeItem("pass");
             localStorage.removeItem("name");
             navigate("/");
           }}

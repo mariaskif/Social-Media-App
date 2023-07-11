@@ -7,8 +7,7 @@ import User from "./components/User";
 import Fav from "./components/Fav";
 import Update from "./components/Update";
 import Myposts from "./components/Myposts";
-
-function App() {
+const App = () => {
   return (
     <>
       <Nav />
@@ -25,6 +24,6 @@ function App() {
       </Container>
     </>
   );
-}
+};
 
 export default App;
