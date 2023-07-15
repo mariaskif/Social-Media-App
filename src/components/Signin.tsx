@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AppDispatch } from "../store/store";
-const Signin = () => {
+const SignIn = () => {
   // const name=useSelector((state)=>state.auth.name)
   // const pass=useSelector((state)=>state.auth.pass)
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +26,11 @@ const Signin = () => {
     navigate("/home");
     localStorage.setItem("name", JSON.stringify(data.name));
   };
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
   const getUserData = async (): Promise<user[]> => {
@@ -82,6 +86,9 @@ const Signin = () => {
           required
           {...register("pass")}
         />
+        <p style={{ color: "red" }}>
+          {errors.pass && "The Password Should Be More Than 4 Characters"}
+        </p>
 
         {/* Signup */}
         <Button
@@ -105,4 +112,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default SignIn;
