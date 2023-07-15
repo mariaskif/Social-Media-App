@@ -61,7 +61,6 @@ const Update = () => {
               sx={{ display: "flex", flexDirection: "column" }}
               maxWidth="400px"
               component="form"
-              // onSubmit={handleSubmit(onSubmit)}
             >
               <TextField
                 defaultValue={item.title}

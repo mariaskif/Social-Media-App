@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { user } from "./interface";
 import { useQuery } from "@tanstack/react-query";
+// import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 const User = () => {
   const navigate = useNavigate();
   const [text, setText] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [image, setImg] = useState<string>("");
-  let updated: boolean = false;
+  const updated: boolean = false;
   const fav: boolean = false;
   const numberOfLikes: number = 0;
   const name: string = JSON.parse(localStorage.getItem("name") || "");
@@ -26,8 +27,9 @@ const User = () => {
     );
   };
   const { data: dataOfUsers } = useQuery(["usersData"], getUserData);
-  const filterUser = (dataOfUsers: { data: info }) => {
-    return dataOfUsers.data.name === name;
+
+  const filterUser = (dataOfUsers: info) => {
+    return dataOfUsers.name === name;
   };
 
   const filterData = dataOfUsers && dataOfUsers.filter(filterUser);
@@ -61,7 +63,7 @@ const User = () => {
     <Box
       sx={{ display: "flex", justifyContent: "space-evenly", flexWrap: "Wrap" }}
     >
-      <Box>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
         <img
           src="/images/avatar-01.jpg"
           style={{ height: "200px", width: "200px", borderRadius: "50%" }}
@@ -115,50 +117,6 @@ const User = () => {
             send
           </Button>
         </Stack>
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-evenly",
-          mt: "20px",
-        }}
-      >
-        {/* Favorite Posts */}
-        <Button
-          variant="contained"
-          disableElevation
-          sx={{ mb: "10px" }}
-          onClick={() => {
-            navigate("/favourite");
-          }}
-        >
-          My Favorite Posts
-        </Button>
-        <Button
-          variant="contained"
-          disableElevation
-          sx={{ mb: "10px" }}
-          onClick={() => {
-            navigate("/mypostes");
-          }}
-        >
-          My Posts
-        </Button>
-        {/* Logout */}
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => {
-            localStorage.removeItem("name");
-            navigate("/");
-          }}
-          disableElevation
-          sx={{ mb: "10px" }}
-        >
-          log Out
-        </Button>
       </Box>
     </Box>
   );

@@ -1,49 +1,10 @@
 {
   "postes": [
-    {
-      "text": "testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-      "title": "my favourt food is",
-      "image": "img.jpg",
-      "fav": true,
-      "numberOfLikes": 2,
-      "updated": false,
-      "userId": 1,
-      "name": "maria skif",
-      "id": 1
-    },
-    {
-      "text": "dd",
-      "title": "dd",
-      "image": "dd",
-      "fav": false,
-      "numberOfLikes": 0,
-      "updated": false,
-      "userId": 2,
-      "name": "test",
-      "id": 2
-    }
+    
   ],
-  "comments": [
-    {
-      "textComm": "ggcc",
-      "postId": 1,
-      "id": 2
-    }
-  ],
+  "comments": [],
   "users": [
-    {
-      "data": {
-        "name": "maria skif",
-        "pass": "12345"
-      },
-      "id": 1
-    },
-    {
-      "data": {
-        "name": "test",
-        "pass": "45678"
-      },
-      "id": 2
-    }
+   
+   
   ]
 }

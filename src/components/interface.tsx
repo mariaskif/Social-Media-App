@@ -11,10 +11,8 @@ export interface post {
 }
 
 export type user = {
-  data: {
-    pass: string;
-    name: string;
-  };
+  pass: string;
+  name: string;
   id: number;
 };
 

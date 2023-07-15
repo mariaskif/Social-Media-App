@@ -22,9 +22,8 @@ const Myposts = () => {
 
   dataOfUsers &&
     dataOfUsers.map((i) => {
-      if (i.data.name === name) {
+      if (i.name === name) {
         userId = i.id;
-        // setUserId(i.id);
       }
       return userId;
     });

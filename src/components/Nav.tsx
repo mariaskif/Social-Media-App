@@ -1,4 +1,3 @@
-import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,7 +20,7 @@ const Nav = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={() => {
-              navigate("/");
+              navigate("/home");
             }}
           >
             <FacebookIcon />

@@ -35,7 +35,8 @@ const Post = ({
   const [textComm, setTextComm] = useState<string>("");
   const [updateCom, setUpdateCom] = useState<boolean>(false);
   const [upId, setUpId] = useState<number>(0);
-  const handelAddToFavorites = async () => {
+  const [ckickMenu, setClickMenue] = useState<boolean>(false);
+  const handleAddToFavorites = async () => {
     fav = !fav;
     await fetch(`http://localhost:3200/postes/${id}`, {
       method: "PATCH",
@@ -45,7 +46,7 @@ const Post = ({
       body: JSON.stringify({ fav }),
     });
   };
-  const handelNumberOfLikes = async () => {
+  const handleNumberOfLikes = async () => {
     numberOfLikes = numberOfLikes + 1;
     await fetch(`http://localhost:3200/postes/${id}`, {
       method: "PATCH",
@@ -55,7 +56,7 @@ const Post = ({
       body: JSON.stringify({ numberOfLikes }),
     });
   };
-  const handelAddComments = async () => {
+  const handleAddComments = async () => {
     setClicked(false);
     const postId = id;
     await fetch(`http://localhost:3200/comments/`, {
@@ -71,7 +72,7 @@ const Post = ({
     updated = true;
   };
 
-  const handelChangeUpdate = async () => {
+  const handleChangeUpdate = async () => {
     changUpdates();
     await fetch(`http://localhost:3200/postes/${id}`, {
       method: "PATCH",
@@ -81,10 +82,14 @@ const Post = ({
       body: JSON.stringify({ updated }),
     }).then(() => navigate("/update"));
   };
-  const handelDelete = async () => {
+  const handleDelete = async () => {
     await fetch(`http://localhost:3200/postes/${id}`, {
       method: "DELETE",
     });
+  };
+  const handleOnClick = () => {
+    setUpdateCom(true);
+    setClicked(true);
   };
   const getData = async (): Promise<comment[]> => {
     return await fetch("http://localhost:3200/comments").then((response) =>
@@ -100,23 +105,58 @@ const Post = ({
       <CardHeader
         avatar={<Avatar alt="Remy Sharp" src="/images/avatar-01.jpg" />}
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <Box>
+            <IconButton
+              aria-label="settings"
+              onClick={() => setClickMenue(!ckickMenu)}
+            >
+              <MoreVertIcon />
+            </IconButton>
+
+            <IconButton sx={{ position: "absolute" }}>
+              {ckickMenu && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "#eee",
+                    ml: "10px",
+                    padding: "10px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  {/* Update Post*/}
+                  <Button
+                    sx={{ mr: "10px", mt: "10px" }}
+                    // variant="contained"
+                    size="small"
+                    onClick={() => handleChangeUpdate()}
+                  >
+                    update
+                  </Button>
+
+                  {/* Delete Post */}
+                  <Button
+                    sx={{ mt: "10px" }}
+                    // variant="contained"
+                    size="small"
+                    onClick={() => handleDelete()}
+                  >
+                    delete
+                  </Button>
+                </Box>
+              )}
+            </IconButton>
+          </Box>
         }
         title={name}
         subheader="September 14, 2016"
       />
       {/* end card header */}
 
-      {/* start card pictuer */}
-      <CardMedia
-        component="img"
-        height="194"
-        image={`/images/${image}`}
-        alt="Paella dish"
-      />
-      {/*end card pictuer */}
+      {/* start card picture */}
+      <CardMedia component="img" height="194" image={image} alt="Paella dish" />
+      {/*end card picture */}
 
       {/* start card content */}
       <CardContent>
@@ -143,7 +183,7 @@ const Post = ({
           <IconButton
             aria-label="add to favorites"
             color={fav ? "error" : "default"}
-            onClick={() => handelAddToFavorites()}
+            onClick={() => handleAddToFavorites()}
           >
             <FavoriteIcon />
           </IconButton>
@@ -152,7 +192,7 @@ const Post = ({
           <IconButton
             aria-label="Like"
             color={numberOfLikes > 0 ? "primary" : "default"}
-            onClick={() => handelNumberOfLikes()}
+            onClick={() => handleNumberOfLikes()}
           >
             <ThumbUpIcon />
             <div
@@ -195,8 +235,8 @@ const Post = ({
               {/* {numberOfComments} */}
             </div>
           </IconButton>
-          {clicked === true ? (
-            updateCom === false ? (
+          {clicked === true &&
+            (updateCom === false ? (
               <div>
                 <TextField
                   size="small"
@@ -206,7 +246,7 @@ const Post = ({
                   placeholder="comment.."
                   sx={{ mb: "10px", mr: "10px" }}
                 />
-                <Button variant="outlined" onClick={() => handelAddComments()}>
+                <Button variant="outlined" onClick={() => handleAddComments()}>
                   OK
                 </Button>{" "}
               </div>
@@ -216,7 +256,7 @@ const Post = ({
                   dataOfComments.map((it) => {
                     return (
                       <Box>
-                        {it.id === upId ? (
+                        {it.id === upId && (
                           <Box>
                             <TextField
                               size="small"
@@ -246,36 +286,12 @@ const Post = ({
                               OK
                             </Button>
                           </Box>
-                        ) : (
-                          ""
                         )}
                       </Box>
                     );
                   })}
               </div>
-            )
-          ) : (
-            ""
-          )}
-        </Box>
-        <Box>
-          {/* Update Post*/}
-          <Button
-            sx={{ mr: "10px", mt: "10px" }}
-            variant="contained"
-            onClick={() => handelChangeUpdate()}
-          >
-            update
-          </Button>
-
-          {/* Delete Post */}
-          <Button
-            sx={{ mt: "10px" }}
-            variant="contained"
-            onClick={() => handelDelete()}
-          >
-            delete
-          </Button>
+            ))}
         </Box>
       </CardActions>
       {/* end card actions */}
@@ -292,13 +308,13 @@ const Post = ({
         </Button>
       </Box>
 
-      {showCom === true ? (
+      {showCom === true && (
         <Box sx={{ mb: "10px" }}>
           {dataOfComments &&
             dataOfComments.map((i) => {
               return (
                 <Box>
-                  {id === i.postId ? (
+                  {id === i.postId && (
                     <Typography
                       key={i.id}
                       paragraph
@@ -319,8 +335,7 @@ const Post = ({
                         <IconButton
                           sx={{ padding: 0 }}
                           onClick={() => {
-                            setUpdateCom(true);
-                            setClicked(true);
+                            handleOnClick();
                             setUpId(i.id);
                           }}
                         >
@@ -342,15 +357,11 @@ const Post = ({
                         </IconButton>
                       </Box>
                     </Typography>
-                  ) : (
-                    ""
                   )}
                 </Box>
               );
             })}
         </Box>
-      ) : (
-        ""
       )}
       {/* end comments section */}
     </Card>
